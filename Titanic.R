@@ -9,4 +9,4 @@ names(train)
 [9] "Ticket"      "Fare"        "Cabin"       "Embarked"
 
 View(train)
-
+Titanic_4_github.png
