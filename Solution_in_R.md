@@ -37,4 +37,21 @@ which gives us
 ![Titanic_4_github](https://user-images.githubusercontent.com/50455967/57469186-eb212b80-723a-11e9-87f6-6499f6b368dc.png)
 
 
-We can clearly see that there is some missing data in this file. If the missing data is not helpful in making predictions to who survived and who didn't, there is not point on working on it. Before we start throwing out what we think is unnecessary data, lets see if there is some correlation between Age and Survived. 
+Lets check how the different numerical predictors (Age, SibSp, Parch, Fare) go-in-hand with the response (Survived). To do that, we can make a heatmap using the following:
+
+First lets just make a numerical sub-data using
+
+```
+train.num = na.omit( train[,c( "Survived" , "Age"  , "Parch" , "SibSp" , "Fare" )] )
+```
+where I have omitted the NA's (Not Availbles) as having them wouldn't give us the correlation matrix.
+
+Next, I find the correlation matrix using
+```
+train.num.cor = cor( train.num )
+```
+
+Now, to make a heatmap, I use green to show a correlation of +1 and red to show -1. To attain this, I make a pallette using
+```
+my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
+```
