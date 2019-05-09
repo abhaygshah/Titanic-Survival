@@ -53,5 +53,14 @@ train.num.cor = cor( train.num )
 
 Now, to make a heatmap, I use green to show a correlation of +1 and red to show -1. To attain this, I make a pallette using
 ```
+library(RColorBrewer) # Loads the package
 my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 299)
 ```
+
+On to the heatmap using
+```
+library(gplots) # Loads the package
+heatmap.2( train.num.cor , col = my_palette, Rowv = NULL , Colv = NULL , dendrogram = "none" , trace="none" , density.info="none" , cellnote = round(train.num.cor , 2) , notecol="black" )
+```
+which gave me 
+
