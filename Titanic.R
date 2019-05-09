@@ -9,4 +9,4 @@ names(train)
 [9] "Ticket"      "Fare"        "Cabin"       "Embarked"
 
 View(train)
-[[https://github.com/abhaygshah/Titanic-Survival/blob/master/Titanic_4_github.png?raw=true]]
+[[Titanic_4_github.png]]
