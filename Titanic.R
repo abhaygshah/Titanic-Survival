@@ -1,6 +1,4 @@
 # Kaggle Competition | Titanic Machine Learning from Disaster
-## Jesus
-### Holy Moly!
 
 train = read.csv("Desktop/Titanic/train.csv")
 test = read.csv("Desktop/Titanic/test.csv")
