@@ -26,5 +26,6 @@ We can also look at the data in the train-file using
 View(train)
 ```
 which gives us
-
+```
 ![Titanic_4_github](https://user-images.githubusercontent.com/50455967/57469186-eb212b80-723a-11e9-87f6-6499f6b368dc.png)
+```
