@@ -64,3 +64,6 @@ heatmap.2( train.num.cor , col = my_palette, Rowv = NULL , Colv = NULL , dendrog
 ```
 which gave me 
 
+![Heatmap](https://user-images.githubusercontent.com/50455967/57475053-6b9a5900-7248-11e9-90cc-9741a15c02a2.png)
+
+In case you are wondering how I achieved this, I used this tutorial on https://sebastianraschka.com/Articles/heatmaps_in_r.html .
