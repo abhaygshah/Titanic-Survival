@@ -116,3 +116,7 @@ heatmap.2( cor(clean.train) , col = my_palette, Rowv = NULL , Colv = NULL , dend
 which gives us
 
 ![Heatmap3](https://user-images.githubusercontent.com/50455967/58042620-0835e400-7af0-11e9-9a76-74d21cd79467.jpeg)
+
+As you can see being a male is really bad! And so is having a lower class ticket (3rd) or lower fare. Hence being a male with a 3rd class ticket which was bought with lower fare (fare and class have strong correlation) signficantly reduces the chances of survival!
+
+**Be careful:** this assumption can be weighed down because there were higher number of people with a 3rd class ticket.
