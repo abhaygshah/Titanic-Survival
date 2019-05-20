@@ -113,3 +113,6 @@ The more informative heatmap is then given by
 ```
 heatmap.2( cor(clean.train) , col = my_palette, Rowv = NULL , Colv = NULL , dendrogram = "none" , trace="none" , density.info="none" , cellnote = round(cor(clean.train) , 2) , notecol="black" )
 ```
+which gives us
+
+![Heatmap3](https://user-images.githubusercontent.com/50455967/58042620-0835e400-7af0-11e9-9a76-74d21cd79467.jpeg)
