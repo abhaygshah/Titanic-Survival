@@ -119,4 +119,6 @@ which gives us
 
 As you can see being a male is really bad! And so is having a lower class ticket (3rd) or lower fare. Hence being a male with a 3rd class ticket which was bought with lower fare (fare and class have strong correlation) signficantly reduces the chances of survival!
 
-**Be careful:** this assumption can be weighed down because there were higher number of people with a 3rd class ticket.
+**Be careful:** this assumption can be weighed down because there were higher number of people with a 3rd class ticket. If that is true we just encountered the concept of **Confounding**.
+
+
