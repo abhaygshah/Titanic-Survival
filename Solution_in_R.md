@@ -82,4 +82,14 @@ In case you are wondering how I achieved this, I used this tutorial on https://s
 
 This is interesting - a positive correlation for Fare and Survived: Greater the Fare, larger the chance of Survival! Hmm... 
 
-
+Let see if being male or female increases/decreases the chance of survival. Also, what about Pclass and where your boarded the ship from? Lets check those details. Lets re-do things a bit more neatly this time:
+```
+clean.train = na.omit(train)
+clean.train = clean.train[,-c(1,4,9,11)] # Removing non-numerical ID, Name, Ticket and Cabin
+names(clean.train)
+```
+gave me 
+```
+[1] "Survived" "Pclass"   "Sex"      "Age"      "SibSp"   
+[6] "Parch"    "Fare"     "Embarked"
+```
