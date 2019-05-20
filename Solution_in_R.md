@@ -93,3 +93,23 @@ gave me
 [1] "Survived" "Pclass"   "Sex"      "Age"      "SibSp"   
 [6] "Parch"    "Fare"     "Embarked"
 ```
+Now I am going to make a new column called NumSex as follow:
+```
+clean.train$NumSex = 0
+clean.train$NumSex[clean.train$Sex=="male"] = 1
+clean.train = clean.train[,-3] # Removing the non-numerical "Sex" column
+```
+A positive correlation will tell me that being a male increases the chances of survivial and a negative will tell me having a penis hurts the chances of survival.
+
+Lets change the Embarked predictor from alphabetic to numerical as follows:
+```
+clean.train$NumEmbarked = 1
+clean.train$NumEmbarked[clean.train$Embarked=="Q"] = 2
+clean.train$NumEmbarked[clean.train$Embarked=="S"] = 3
+clean.train = clean.train[,-7] # Removing the non-numerical "Embarked" column
+```
+So what did I do here? What this tells me is the following: A positive correlation tells me that departing from a city whose first letter is further down the series of alphabets increases the chance of surivial! Just boarding from Southampton is better than departing from Cherbourg.
+The more informative heatmap is then given by 
+```
+heatmap.2( cor(clean.train) , col = my_palette, Rowv = NULL , Colv = NULL , dendrogram = "none" , trace="none" , density.info="none" , cellnote = round(cor(clean.train) , 2) , notecol="black" )
+```
