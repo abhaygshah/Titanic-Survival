@@ -26,6 +26,18 @@ which then gives me
 [9] "Ticket"      "Fare"        "Cabin"       "Embarked"
 ````
 
+Let me first tell you what each column is
+(1) PassengerId is just the row number. Thankfully, I am using **R** which means I don't have to worry about the off-by-one issue - whew!
+(2) Survived is just 0 or 1 (for those who survived).
+(3) Pclass tells you if its first, second or third class.
+(4-6) Name, Sex and Age are pretty much self-explanatory.
+(7) SibSp gives the total number of siblings and spouses that particular passenger has. 
+(8) Parch gives the total number of parents and children that particular passenger has.
+(9) Ticket is the Ticket number.
+(10) Fare is self-explanatory.
+(11) Cabin is the cabin-number.
+(12) Embarked tells us where the passenger embarked from Cherbourg, Queenstown or Southampton. Psst - I was in Southampton for 4 years! Its a nice place. 
+
 We can also look at the data in the train-file using
 
 ```
@@ -67,3 +79,7 @@ which gave me
 ![Heatmap](https://user-images.githubusercontent.com/50455967/57475053-6b9a5900-7248-11e9-90cc-9741a15c02a2.png)
 
 In case you are wondering how I achieved this, I used this tutorial on https://sebastianraschka.com/Articles/heatmaps_in_r.html .
+
+This is interesting - a positive correlation for Fare and Survived: Greater the Fare, larger the chance of Survival! Hmm... 
+
+
