@@ -158,5 +158,29 @@ which then gave me
 Aah, so you can see the "probability" of surviving with each class. Alright, that is enough analysis for Pclass and Survival rate. Just to be clear - **confounding** didn't occur here. % of people who survived in Pclass=3 is indeed less.
 
 Lets look at gender. Heatmap clearly showed how males are less favorable. How true is that?
+```
+G = c(sum(train$Sex=="male" & train$Survived==1)/sum(train$Sex=="male") , sum(train$Sex=="female" & train$Survived==1)/sum(train$Sex=="female"))
+barplot(G*100, col = c("cyan" , "pink"), xlab = "Gender" , ylab = "% survived", names.arg = c("male","female"), ylim = c(0,80))
+```
 
+![percent_surv_gender](https://user-images.githubusercontent.com/50455967/58113099-b0f44a00-7ba9-11e9-9d7a-34cccdfdcae7.jpeg)
 
+Holy moly! That is nuts! Less than 20% of males survived.
+
+Lets look at the number of males and females and compare those things with a stacked barplot. 
+```
+SM = sum(train$Sex=="male" & train$Survived==1)
+DM = sum(train$Sex=="male" & train$Survived==0)
+SF = sum(train$Sex=="female" & train$Survived==1)
+DF = sum(train$Sex=="female" & train$Survived==0)
+tab2.Surv = c(0,1,0,1)
+tab2.Gender = c("Male", "Male" , "Female" , "Female")
+tab2.Nos = c(DM, SM , DF , SF)
+tab2 = data.frame( cbind( tab2.Surv , tab2.Gender , tab2.Nos ) )
+names(tab2)[1] = "Surv"
+names(tab2)[2] = "Gender"
+names(tab2)[3] = "Nos"
+tab2$Nos = tab2.Nos # I had to do it since it thought "Nos" was a factor! Weird huh!
+ggplot(data=tab2, aes(x=Gender, y=Nos, fill=Surv)) + geom_bar(stat="identity")
+```
+which then gave me
