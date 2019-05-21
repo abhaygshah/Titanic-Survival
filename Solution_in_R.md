@@ -453,4 +453,53 @@ So, I have finally filled up all the missing values. Its time for some robust an
 train.data = train
 test.data = test
 train = 1:891
+mfull.Survived = c(train.data$Survived , rep(NA,418))
+mfull$Survived = mfull.Survived
+mfull$Pclass = as.factor(mfull$Pclass)
 ```
+I do a linear fit as follows:
+```
+glm.fit = glm(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked + Titles , subset = train , data = mfull, family = binomial)
+
+summary(glm.fit)
+
+##### RESULT BELOW THIS #####
+
+glm(formula = Survived ~ Pclass + Sex + Age + SibSp + Parch + 
+    Fare + Embarked + Titles, family = binomial, data = mfull, 
+    subset = train)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.3876  -0.5576  -0.3830   0.5404   2.5939  
+
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  3.305e+01  1.323e+03   0.025 0.980073    
+Pclass2     -1.084e+00  3.235e-01  -3.351 0.000804 ***
+Pclass3     -2.170e+00  3.193e-01  -6.796 1.08e-11 ***
+Sexmale     -1.621e+01  8.326e+02  -0.019 0.984465    
+Age         -2.964e-02  9.616e-03  -3.082 0.002055 ** 
+SibSp       -5.557e-01  1.260e-01  -4.411 1.03e-05 ***
+Parch       -3.574e-01  1.347e-01  -2.653 0.007988 ** 
+Fare         3.432e-03  2.648e-03   1.296 0.195050    
+EmbarkedC   -1.250e+01  1.029e+03  -0.012 0.990302    
+EmbarkedQ   -1.262e+01  1.029e+03  -0.012 0.990207    
+EmbarkedS   -1.293e+01  1.029e+03  -0.013 0.989972    
+TitlesMiss. -1.671e+01  8.326e+02  -0.020 0.983987    
+TitlesMr.   -3.389e+00  5.490e-01  -6.172 6.74e-10 ***
+TitlesMrs.  -1.584e+01  8.326e+02  -0.019 0.984818    
+TitlesFancy -3.373e+00  7.929e-01  -4.254 2.10e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1186.66  on 890  degrees of freedom
+Residual deviance:  723.63  on 876  degrees of freedom
+AIC: 753.63
+
+Number of Fisher Scoring iterations: 14
+```
+
+WOW - look at that! Fare and Embarked don't play a role in a linear-fit. Amazing! Or is it? Does my assumption that Fare is uniformly disributed hold here? Lets see...
