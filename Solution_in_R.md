@@ -142,5 +142,5 @@ library(ggplot2)
 ggplot(data=tab1, aes(x=Pclass, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ```
 which gave us
-
+![Pclass_Surv](https://user-images.githubusercontent.com/50455967/58108836-67076600-7ba1-11e9-8980-5188ddde6842.jpeg)
 
