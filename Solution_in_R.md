@@ -143,4 +143,11 @@ ggplot(data=tab1, aes(x=Pclass, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ```
 which gave us
 ![Pclass_Surv](https://user-images.githubusercontent.com/50455967/58108836-67076600-7ba1-11e9-8980-5188ddde6842.jpeg)
-
+As one can see, the number of people in 3rd class were much higher. Lets just take one look at the % of people who survived in each class - this should be quick.
+```
+P1 = sum(train$Pclass==1 & train$Survived==1)/sum(train$Pclass==1)
+P2 = sum(train$Pclass==2 & train$Survived==1)/sum(train$Pclass==2)
+P3 = sum(train$Pclass==3 & train$Survived==1)/sum(train$Pclass==3)
+P = c( P1 , P2 , P3 )
+barplot(P*100, col = c("green" , "orange" , "red"), xlab = "Pclass" , ylab = "% survived in each Pclass", names.arg = c("1","2","3"), ylim = c(0,70))
+```
