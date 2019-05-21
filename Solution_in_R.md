@@ -119,6 +119,28 @@ which gives us
 
 As you can see being a male is really bad! And so is having a lower class ticket (3rd) or lower fare. Hence being a male with a 3rd class ticket which was bought with lower fare (fare and class have strong correlation) signficantly reduces the chances of survival!
 
-**Be careful:** this assumption can be weighed down because there were higher number of people with a 3rd class ticket. If that is true we just encountered the concept of **Confounding**.
+**Be careful:** this assumption can be incorrect because there were higher number of people with a 3rd class ticket. If that is true we just encountered the concept of **Confounding**.
+
+So lets go see some plots to understand this clearly:
+```
+S3 = sum(train$Pclass==3 & train$Survived==1)
+S2 = sum(train$Pclass==2 & train$Survived==1)
+S1 = sum(train$Pclass==1 & train$Survived==1)
+D3 = sum(train$Pclass==3 & train$Survived==1)
+D3 = sum(train$Pclass==3 & train$Survived==0)
+D2 = sum(train$Pclass==2 & train$Survived==0)
+D1 = sum(train$Pclass==1 & train$Survived==0)
+tab1.Surv = Surv
+tab1.Pclass = c(1,1,2,2,3,3)
+tab1.nos = c(D1,S1,D2,S2,D3,S3)
+tab1 = cbind(tab1.Surv, tab1.Pclass, tab1.nos)
+tab1 = data.frame(tab1)
+names(tab1)[1] = "Surv"
+names(tab1)[2] = "Pclass" # If you are thinking why I didn't do this earlier, it was to eliminate unnecessary confusion
+names(tab1)[3] = "Nos"
+library(ggplot2)
+ggplot(data=tab1, aes(x=Pclass, y=Nos, fill=Surv)) + geom_bar(stat="identity")
+```
+which gave us
 
 
