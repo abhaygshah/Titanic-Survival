@@ -224,4 +224,52 @@ ggplot(data=tab4, aes(x=Emb, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 which then give us
 ![Emb_Vs_Surv](https://user-images.githubusercontent.com/50455967/58117194-e18cb180-7bb2-11e9-8dbf-8a7a508db9aa.jpeg)
 
-Alright, I think this is enough analysis for now. 
+You can clearly see that a large % of people who embarked on this journey from Cherbourg didn't survive. This is also evident from the heatmap above. Alright, I think this is enough analysis for now... Lets move on to fill some missing values, shall we? I can clearly see that the Age predictor has 20% of its values missing. I am going to fill it up using the titles that each person hold. The titles are given in the Name predictor. See, everything comes in some use. 
+Note: This idea is indeed superb but I cannot take credit for it - I borrowed this idea from Yassine Ghouzam who has shown some fine work on this competition. 
+
+Alright so, let me go ahead and work on it. These little lines extracts the title (Mr., Mrs, Master, etc)
+```
+SecondPart = colsplit(train$Name, ",", c("1","2") )[,2]
+RemoveSpace = substring( SecondPart , 2 )
+train$Titles = colsplit( RemoveSpace ," ",c("1","2") )[,1]
+train$Titles = as.factor(train$Titles)
+levels(train$Titles) # gave me
+    [1] "Capt."     "Col."      "Don."      "Dr."      
+    [5] "Jonkheer." "Lady."     "Major."    "Master."  
+    [9] "Miss."     "Mlle."     "Mme."      "Mr."      
+    [13] "Mrs."      "Ms."       "Rev."      "Sir."     
+    [17] "the" 
+```
+The "the" comes from the 760th row whose name is "Rothes, the Countess. of (Lucy Noel Martha Dyer-Edwards)"
+So, 17 new titles and how many people have them?
+```
+tab5.Titles = levels(train$Titles)
+tab5.Nos = rep(0,17)
+for(i in 1:17){tab5.Nos[i] = sum(train$Titles==levels(train$Titles)[i]) }
+tab5 = data.frame(tab5.Titles , tab5.Nos)
+names(tab5) = c("Titles" , "Nos")
+tab5 # gives us
+      Titles Nos
+    1      Capt.   1
+    2       Col.   2
+    3       Don.   1
+    4        Dr.   7
+    5  Jonkheer.   1
+    6      Lady.   1
+    7     Major.   2
+    8    Master.  40
+    9      Miss. 182
+    10     Mlle.   2
+    11      Mme.   1
+    12       Mr. 517
+    13      Mrs. 125
+    14       Ms.   1
+    15      Rev.   6
+    16      Sir.   1
+    17       the   1
+```
+What I will now do is make a new title called *"Fancy"* and shove "Capt.", "Col.", "Don.", "Dr.", "Jonkheer.", "Lady.", "Major.", "Rev.", "Sir.", and "the". 
+I will group "Ms." and "Mlle." into "Miss.", and
+group "Mme." into "Mrs.". 
+So, we should then have "Fancy", "Miss." (female child), "Master." (male child), "Mrs." (adult/married female) and "Mr." (adult/married male). **We should now be able to guess the ages from them.**
+But before I do that I think I made a blunder. This was just the training dataset. I can borrow info from the test dataset about these ages too. So let me go ahead and merge the train and test datasets appropriately. 
