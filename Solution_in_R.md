@@ -204,3 +204,22 @@ ggplot(data=tab3, aes(x=Fare, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ![Fare_vs_Nos](https://user-images.githubusercontent.com/50455967/58116386-02540780-7bb1-11e9-8f7b-b61da79a96c2.jpeg)
 
 Alright, this looks really bad for those with lesser fare. Remember the "Less" and "More" in the above diagram is for those who paid fare less or more than the median of the fare (whose distribution is really skewed). 
+
+Lets do one last check and see how the chances of survival are if one departs from Cherbourg, Queenstown or Southampton.
+```
+DC = sum(train$Survived==0 & train$Embarked=="C")
+SC = sum(train$Survived==1 & train$Embarked=="C")
+DQ = sum(train$Survived==0 & train$Embarked=="Q")
+SQ = sum(train$Survived==1 & train$Embarked=="Q")
+DS = sum(train$Survived==0 & train$Embarked=="S")
+SS = sum(train$Survived==1 & train$Embarked=="S")
+tab4.Surv = rep(c(0,1),3)
+tab4.Emb = c("C" , "C" , "Q" , "Q" , "S" , "S" )
+tab4.Nos = c(DS, SC , DQ , SQ , DS , SS)
+tab4 = data.frame(cbind(tab4.Surv , tab4.Emb , tab4.Nos))
+names(tab4) = c("Surv" , "Emb" , "Nos")
+tab4$Nos = tab4.Nos # This is annoying!
+ggplot(data=tab4, aes(x=Emb, y=Nos, fill=Surv)) + geom_bar(stat="identity")
+```
+which then give us
+
