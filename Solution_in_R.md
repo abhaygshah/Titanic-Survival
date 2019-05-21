@@ -222,4 +222,6 @@ tab4$Nos = tab4.Nos # This is annoying!
 ggplot(data=tab4, aes(x=Emb, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ```
 which then give us
+![Emb_Vs_Surv](https://user-images.githubusercontent.com/50455967/58117194-e18cb180-7bb2-11e9-8dbf-8a7a508db9aa.jpeg)
 
+Alright, I think this is enough analysis for now. 
