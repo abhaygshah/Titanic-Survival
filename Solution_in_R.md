@@ -187,3 +187,18 @@ which then gave me
 ![Gender_nos](https://user-images.githubusercontent.com/50455967/58114843-899f7c00-7bad-11e9-895f-04f7b2631bcf.jpeg)
 
 This really tells us something, huh!
+
+Lets look at Fare - now Fare is a continuous variable (a real number greater than or equal to zero in this case). So, to study it what I am going to do is the following: lets look at the median or mean of the fare and assign people to two groups, one whose fare was less than the median or mean, and another whose fare was greater than the median or the mean. Here is a possible issue: what should I chose? The median or the mean? I am going to use the median since it "symmetrizes" the population into two *well-defined* halves. By the way, the median of the fare is £14.45 and the mean is £32.20. This might not seem a lot but remember that we are looking at the 1912. To convert it to 2019 money, *multiply it with 25*. Still not that bad for a trans-atlantic journey huh! Alright, anyhow, let me not go off-tangent to economics and continue my analysis of the fare vs survived.
+```
+DFL = sum(train$Fare<=median(train$Fare) & train$Survived==0)
+DFG = sum(train$Fare>median(train$Fare) & train$Survived==0)
+SFG = sum(train$Fare>median(train$Fare) & train$Survived==1)
+SFL = sum(train$Fare<=median(train$Fare) & train$Survived==1)
+tab3.Surv = c(0,1,0,1)
+tab3.Fare = c("Less","Less","More","More")
+tab3.Nos = c(DFL, SFL , DFG , SFG)
+tab3 = data.frame(cbind(tab3.Surv , tab3.Fare , tab3.Nos))
+tab3$Nos = tab3.Nos
+ggplot(data=tab3, aes(x=Fare, y=Nos, fill=Surv)) + geom_bar(stat="identity")
+```
+
