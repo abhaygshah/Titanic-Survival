@@ -143,6 +143,7 @@ ggplot(data=tab1, aes(x=Pclass, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ```
 which gave us
 ![Pclass_Surv](https://user-images.githubusercontent.com/50455967/58108836-67076600-7ba1-11e9-8980-5188ddde6842.jpeg)
+
 As one can see, the number of people in 3rd class were much higher. Lets just take one look at the % of people who survived in each class - this should be quick.
 ```
 P1 = sum(train$Pclass==1 & train$Survived==1)/sum(train$Pclass==1)
@@ -153,4 +154,9 @@ barplot(P*100, col = c("green" , "orange" , "red"), xlab = "Pclass" , ylab = "% 
 ```
 which then gave me
 ![pclass-percent](https://user-images.githubusercontent.com/50455967/58109211-0a587b00-7ba2-11e9-8bb1-6289ca901b0f.jpeg)
-Aah, so you can see the "probability" of surviving with each class. 
+
+Aah, so you can see the "probability" of surviving with each class. Alright, that is enough analysis for Pclass and Survival rate. Just to be clear - **confounding** didn't occur here. % of people who survived in Pclass=3 is indeed less.
+
+Lets look at gender. Heatmap clearly showed how males are less favorable. How true is that?
+
+
