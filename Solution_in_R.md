@@ -151,3 +151,6 @@ P3 = sum(train$Pclass==3 & train$Survived==1)/sum(train$Pclass==3)
 P = c( P1 , P2 , P3 )
 barplot(P*100, col = c("green" , "orange" , "red"), xlab = "Pclass" , ylab = "% survived in each Pclass", names.arg = c("1","2","3"), ylim = c(0,70))
 ```
+which then gave me
+![pclass-percent](https://user-images.githubusercontent.com/50455967/58109211-0a587b00-7ba2-11e9-8bb1-6289ca901b0f.jpeg)
+Aah, so you can see the "probability" of surviving with each class. 
