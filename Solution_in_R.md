@@ -201,4 +201,6 @@ tab3 = data.frame(cbind(tab3.Surv , tab3.Fare , tab3.Nos))
 tab3$Nos = tab3.Nos
 ggplot(data=tab3, aes(x=Fare, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ```
+![Fare_vs_Nos](https://user-images.githubusercontent.com/50455967/58116386-02540780-7bb1-11e9-8f7b-b61da79a96c2.jpeg)
 
+Alright, this looks really bad for those with lesser fare. Remember the "Less" and "More" in the above diagram is for those who paid fare less or more than the median of the fare (whose distribution is really skewed). 
