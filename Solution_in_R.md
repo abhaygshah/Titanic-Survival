@@ -336,3 +336,121 @@ tab5
     17      Sir.   1
     18       the   1
 ```
+
+```
+axe = which(mfull$Titles == "Capt.")
+mfull$Titles[axe] = "Fancy"
+axe = which(mfull$Titles == "Col.")
+mfull$Titles[axe] = "Fancy"
+axe = which(mfull$Titles == "Don.")
+mfull$Titles[axe] = "Fancy"
+axe = which(mfull$Titles == "Dona.")
+mfull$Titles[axe] = "Fancy"
+axe = which(mfull$Titles == "Dr.")
+mfull$Titles[axe] = "Fancy"
+axe = which(mfull$Titles == "Jonkheer.")
+mfull$Titles[axe] = "Fancy"
+axe = which(mfull$Titles == "Lady.")
+mfull$Titles[axe] = "Fancy"
+axe = which(mfull$Titles == "Major.")
+mfull$Titles[axe] = "Fancy"
+axe = which(mfull$Titles == "Rev.")
+mfull$Titles[axe] = "Fancy"
+axe = which(mfull$Titles == "Sir.")
+mfull$Titles[axe] = "Fancy"
+axe = which(mfull$Titles == "the")
+mfull$Titles[axe] = "Fancy"
+
+axe = which(mfull$Titles == "Ms.")
+mfull$Titles[axe] = "Miss."
+axe = which(mfull$Titles == "Mlle.")
+mfull$Titles[axe] = "Miss."
+axe = which(mfull$Titles == "Mme.")
+mfull$Titles[axe] = "Mrs."
+```
+With these changes, lets see what I get:
+```
+tab5.Nos = rep(0,18)
+for(i in 1:18){
+                tab5.Nos[i] = sum(mfull$Titles==levels(mfull$Titles)[i]) 
+                }
+tab5.Titles = levels(mfull$Titles)
+tab5 = data.frame(cbind(tab5.Titles , tab5.Nos))
+names(tab5) = c("Titles" , "Nos")
+tab5
+          Titles Nos
+    1      Capt.   0
+    2       Col.   0
+    3       Don.   0
+    4      Dona.   0
+    5        Dr.   0
+    6  Jonkheer.   0
+    7      Lady.   0
+    8     Major.   0
+    9    Master.  61
+    10     Miss. 264
+    11     Mlle.   0
+    12      Mme.   0
+    13       Mr. 757
+    14      Mrs. 198
+    15       Ms.   0
+    16      Rev.   0
+    17      Sir.   0
+    18       the   0
+    19     Fancy  29
+```
+Lets find rows which belong to these 5 titles:
+```
+row.Master = which( mfull$Titles == "Master." )
+row.Mr = which( mfull$Titles == "Mr." )
+row.Mrs = which( mfull$Titles == "Mrs." )
+row.Miss = which( mfull$Titles == "Miss." )
+row.Fancy = which( mfull$Titles == "Fancy" )
+```
+Lets find the mean age in each of these
+```
+age.Master = mean(na.omit(mfull$Age[row.Master])) # 5.48
+age.Mr = mean(na.omit(mfull$Age[row.Mr])) # 32.25
+age.Mrs = mean(na.omit(mfull$Age[row.Mrs])) # 36.92
+age.Miss = mean(na.omit(mfull$Age[row.Miss])) # 21.82
+age.Fancy = mean(na.omit(mfull$Age[row.Fancy])) # 45.18
+```
+Lets find the rows with missing ages as follows:
+```
+rows.Masters.ageless = which(mfull$Titles == "Master." & is.na(mfull$Age) == T)
+rows.Mr.ageless = which(mfull$Titles == "Mr." & is.na(mfull$Age) == T)
+rows.Miss.ageless = which(mfull$Titles == "Miss." & is.na(mfull$Age) == T)
+rows.Mrs.ageless = which(mfull$Titles == "Mrs." & is.na(mfull$Age) == T)
+rows.Fancy.ageless = which(mfull$Titles == "Fancy" & is.na(mfull$Age) == T)
+```
+Assigning the ages as follows:
+```
+mfull$Age[rows.Fancy.ageless] = age.Fancy
+mfull$Age[rows.Masters.ageless] = age.Master
+mfull$Age[rows.Miss.ageless] = age.Miss
+mfull$Age[rows.Mr.ageless] = age.Mr
+mfull$Age[rows.Mrs.ageless] = age.Mrs
+```
+Lets check if we have any more NA's.
+```
+sum(is.na(mfull)) 
+    1
+```
+Uh oh, there is still one left. What would it be? Aah, its Fare on the 1044-th row in the full dataset or 153rd in the test set. Mr Thomas Storey. Well what shall we do? 
+I think we can fill it up with the mean of the fares for those who embarked from Southampton, have a Pclass=3 and an age of greater than 50. Shall we do that? It makes more sense to do this than filling it up with mean of all the fares. 
+Well there are 9 people (a total of 10 including Mr Storey) who satisfy these criteria.
+```
+mean(na.omit(mfull$Fare[mfull$Embarked=="S" & mfull$Pclass==3 & mfull$Age > 50]))
+    7.719275
+```
+```
+mfull$Fare[1044] = 7.719275
+```
+
+
+So, I have finally filled up all the missing values. Its time for some robust analysis. Since I began with (stupidly) assigning the names "train" and "test" to the datasets, its time to ammend these names:
+```
+train.data = train
+test.data = test
+train = 1:891
+```
