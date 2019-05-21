@@ -184,6 +184,6 @@ tab2$Nos = tab2.Nos # I had to do it since it thought "Nos" was a factor! Weird 
 ggplot(data=tab2, aes(x=Gender, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ```
 which then gave me
-![percent_surv_gender](https://user-images.githubusercontent.com/50455967/58114789-5c52ce00-7bad-11e9-89e1-deafc3fe6218.jpeg)
+![Gender_nos](https://user-images.githubusercontent.com/50455967/58114843-899f7c00-7bad-11e9-895f-04f7b2631bcf.jpeg)
 
 This really tells us something, huh!
