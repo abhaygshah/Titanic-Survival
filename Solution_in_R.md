@@ -269,7 +269,70 @@ tab5 # gives us
     17       the   1
 ```
 What I will now do is make a new title called *"Fancy"* and shove "Capt.", "Col.", "Don.", "Dr.", "Jonkheer.", "Lady.", "Major.", "Rev.", "Sir.", and "the". 
+
 I will group "Ms." and "Mlle." into "Miss.", and
+
 group "Mme." into "Mrs.". 
+
 So, we should then have "Fancy", "Miss." (female child), "Master." (male child), "Mrs." (adult/married female) and "Mr." (adult/married male). **We should now be able to guess the ages from them.**
+
 But before I do that I think I made a blunder. This was just the training dataset. I can borrow info from the test dataset about these ages too. So let me go ahead and merge the train and test datasets appropriately. 
+```
+names(train)
+    [1] "PassengerId" "Survived"    "Pclass"      "Name"       
+    [5] "Sex"         "Age"         "SibSp"       "Parch"      
+    [9] "Ticket"      "Fare"        "Cabin"       "Embarked"   
+    [13] "Titles"  
+names(test)
+    [1] "PassengerId" "Pclass"      "Name"        "Sex"        
+    [5] "Age"         "SibSp"       "Parch"       "Ticket"     
+    [9] "Fare"        "Cabin"       "Embarked"
+```
+```
+mtrain = train[,3:12]
+mtest = test[,2:11]
+mfull = rbind(mtrain, mtest)
+```
+Now, lets extract the title again and do some quick analysis:
+```
+SecondPart = colsplit(mfull$Name, ",", c("1","2") )[,2]
+RemoveSpace = substring( SecondPart , 2 )
+mfull$Titles = colsplit( RemoveSpace ," ",c("1","2") )[,1]
+mfull$Titles = as.factor(mfull$Titles)
+levels(mfull$Titles)
+    [1] "Capt."     "Col."      "Don."      "Dona."    
+    [5] "Dr."       "Jonkheer." "Lady."     "Major."   
+    [9] "Master."   "Miss."     "Mlle."     "Mme."     
+    [13] "Mr."       "Mrs."      "Ms."       "Rev."     
+    [17] "Sir."      "the"
+```
+Alright 18 titles. I am going to do the same grouping as before with "Dona." also going under "Fancy". 
+```
+tab5.Nos = rep(0,18)
+for(i in 1:18){
+                tab5.Nos[i] = sum(mfull$Titles==levels(mfull$Titles)[i]) 
+                }
+tab5.Titles = levels(mfull$Titles)
+tab5 = data.frame(cbind(tab5.Titles , tab5.Nos))
+names(tab5) = c("Titles" , "Nos")
+tab5
+          Titles Nos
+    1      Capt.   1
+    2       Col.   4
+    3       Don.   1
+    4      Dona.   1
+    5        Dr.   8
+    6  Jonkheer.   1
+    7      Lady.   1
+    8     Major.   2
+    9    Master.  61
+    10     Miss. 260
+    11     Mlle.   2
+    12      Mme.   1
+    13       Mr. 757
+    14      Mrs. 197
+    15       Ms.   2
+    16      Rev.   8
+    17      Sir.   1
+    18       the   1
+```
