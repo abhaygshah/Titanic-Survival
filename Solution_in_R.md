@@ -521,3 +521,26 @@ which.min(abs(v2))
     98
 ```
 The plot gives us
+
+![FareSkewness](https://user-images.githubusercontent.com/50455967/58187773-49530300-7c6c-11e9-8d85-85acf61f9178.jpeg)
+
+This clearly shows that using v1[98] = -0.15 (the lambda for Box-Cox Transformation) gives the best zero skewness. 
+```
+mfull$Fare.Std = scale( ( (mfull$Fare+1)^(-0.15) - 1 )/(-0.15) )
+```
+Age's skewness is not that bad - its 0.37. Lets try to bring it closer to zero. 
+```
+v4 = rep(NA,201)
+> for(i in 1:201){
+    if(v1[i] != 0){
+    v4[i] = skewness( ((mfull$Age+1)^v1[i] - 1)/v1[i] )}
+    else { v4[i] = skewness(log(mfull$Age+1)) } }
+which.min(abs(v4))
+    117
+v1[117]
+    0.8
+v2[117]
+    -0.002134134
+mfull$Age.Std = scale( ( (mfull$Age+1)^(0.8) - 1 )/(0.8) )
+```
+Though Parch and SibSp are discrete variables (positive integers), their skewness is pretty high. We should fix them too. And once we fix them, we have to start worrying about **Outliers**. And do something with them!
