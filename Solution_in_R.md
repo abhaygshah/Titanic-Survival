@@ -99,7 +99,7 @@ clean.train$NumSex = 0
 clean.train$NumSex[clean.train$Sex=="male"] = 1
 clean.train = clean.train[,-3] # Removing the non-numerical "Sex" column
 ```
-A positive correlation will tell me that being a male increases the chances of survivial and a negative will tell me having a penis hurts the chances of survival.
+A positive correlation will tell me that being a male increases the chances of survivial and a negative will tell me that being a male hurts the chances of survival. And the opposite for a female passenger.
 
 Lets change the Embarked predictor from alphabetic to numerical as follows:
 ```
