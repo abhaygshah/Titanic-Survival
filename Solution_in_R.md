@@ -142,6 +142,7 @@ library(ggplot2)
 ggplot(data=tab1, aes(x=Pclass, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ```
 which gave us
+
 ![Pclass_Surv](https://user-images.githubusercontent.com/50455967/58108836-67076600-7ba1-11e9-8980-5188ddde6842.jpeg)
 
 As one can see, the number of people in 3rd class were much higher. Lets just take one look at the % of people who survived in each class - this should be quick.
@@ -153,6 +154,7 @@ P = c( P1 , P2 , P3 )
 barplot(P*100, col = c("green" , "orange" , "red"), xlab = "Pclass" , ylab = "% survived in each Pclass", names.arg = c("1","2","3"), ylim = c(0,70))
 ```
 which then gave me
+
 ![pclass-percent](https://user-images.githubusercontent.com/50455967/58109211-0a587b00-7ba2-11e9-8bb1-6289ca901b0f.jpeg)
 
 Aah, so you can see the "probability" of surviving with each class. Alright, that is enough analysis for Pclass and Survival rate. Just to be clear - **confounding** didn't occur here. % of people who survived in Pclass=3 is indeed less.
@@ -202,6 +204,7 @@ tab3 = data.frame(cbind(tab3.Surv , tab3.Fare , tab3.Nos))
 tab3$Nos = tab3.Nos
 ggplot(data=tab3, aes(x=Fare, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ```
+
 ![Fare_vs_Nos](https://user-images.githubusercontent.com/50455967/58116386-02540780-7bb1-11e9-8f7b-b61da79a96c2.jpeg)
 
 Alright, this looks really bad for those with lesser fare. Remember the "Less" and "More" in the above diagram is for those who paid fare less or more than the median of the fare (whose distribution is really skewed). 
