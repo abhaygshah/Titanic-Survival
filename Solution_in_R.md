@@ -502,4 +502,22 @@ AIC: 753.63
 Number of Fisher Scoring iterations: 14
 ```
 
-WOW - look at that! Fare and Embarked don't play a role in a linear-fit. Amazing! Or is it? Does my assumption that Fare is uniformly disributed hold here? Lets see...
+WOW - look at that! Fare and Embarked don't play a role in a linear-fit. Amazing! Or is it? Does my assumption that Fare is uniformly disributed hold here? Lets see... I need to find the skewness of the distribution using library e1071.
+```
+library(e1071)
+skewness(mfull$Fare)
+4.359
+```
+Lets fix this continuous variable's skewness using Box-Cox Transformation as follows:
+```
+v1 = seq(-5,5,0.05)
+v2 = rep(NA,201)
+for(i in 1:201){
+    if(v1[i] != 0){
+    v2[i] = skewness( ((mfull$Fare+1)^v1[i] - 1)/v1[i] )}
+    else { v2[i] = skewness(log(mfull$Fare+1)) } }
+plot(v1,abs(v2))
+which.min(abs(v2))
+    98
+```
+The plot gives us
