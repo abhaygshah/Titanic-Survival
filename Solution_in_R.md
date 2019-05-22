@@ -184,6 +184,7 @@ tab2$Nos = tab2.Nos # I had to do it since it thought "Nos" was a factor! Weird 
 ggplot(data=tab2, aes(x=Gender, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ```
 which then gave me
+
 ![Gender_nos](https://user-images.githubusercontent.com/50455967/58114843-899f7c00-7bad-11e9-895f-04f7b2631bcf.jpeg)
 
 This really tells us something, huh!
@@ -222,6 +223,7 @@ tab4$Nos = tab4.Nos # This is annoying!
 ggplot(data=tab4, aes(x=Emb, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ```
 which then give us
+
 ![Emb_Vs_Surv](https://user-images.githubusercontent.com/50455967/58117194-e18cb180-7bb2-11e9-8dbf-8a7a508db9aa.jpeg)
 
 You can clearly see that a large % of people who embarked on this journey from Cherbourg didn't survive. This is also evident from the heatmap above. Alright, I think this is enough analysis for now... Lets move on to fill some missing values, shall we? I can clearly see that the Age predictor has 20% of its values missing. I am going to fill it up using the titles that each person hold. The titles are given in the Name predictor. See, everything comes in some use. 
