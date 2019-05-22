@@ -453,7 +453,7 @@ mfull$Fare[1044] = 7.719275
 ```
 
 
-So, I have finally filled up all the missing values. Its time for some robust analysis. Since I began with (stupidly) assigning the names "train" and "test" to the datasets, its time to ammend these names:
+So, I have finally filled up all the missing values. Its time for some analysis. Since I began with (stupidly) assigning the names "train" and "test" to the datasets, its time to ammend these names:
 ```
 train.data = train
 test.data = test
@@ -462,7 +462,7 @@ mfull.Survived = c(train.data$Survived , rep(NA,418))
 mfull$Survived = mfull.Survived
 mfull$Pclass = as.factor(mfull$Pclass)
 ```
-I do a linear fit as follows:
+To begin with I do a very **preliminary** linear fit analysis as follows:
 ```
 glm.fit = glm(Survived ~ Pclass + Sex + Age + SibSp + Parch + Fare + Embarked + Titles , subset = train , data = mfull, family = binomial)
 
@@ -507,7 +507,7 @@ AIC: 753.63
 Number of Fisher Scoring iterations: 14
 ```
 
-WOW - look at that! Fare and Embarked don't play a role in a linear-fit. Amazing! Or is it? Does my assumption that Fare is uniformly disributed hold here? Lets see... I need to find the skewness of the distribution using library e1071.
+WOW - look at that! Fare and Embarked don't play a role in a linear-fit. Amazing! Or is it? Does my assumption that Fare is uniformly disributed hold here? Not only that - a lot more is going on. Remember this is just a simple linear fit. I still have other analyses like  **LDA**, **Trees**, etc other left. Lets see... I need to find the skewness of the distribution using library e1071.
 ```
 library(e1071)
 skewness(mfull$Fare)
@@ -548,4 +548,4 @@ v2[117]
     -0.002134134
 mfull$Age.Std = scale( ( (mfull$Age+1)^(0.8) - 1 )/(0.8) )
 ```
-Though Parch and SibSp are discrete variables (positive integers), their skewness is pretty high. We should fix them too. And once we fix them, we have to start worrying about **Outliers**. And do something with them!
+Though Parch and SibSp are discrete variables (positive integers), their skewness is pretty high. We should fix them too. And once we fix them, we have to start worrying about **Outliers**. And do something with them! Then we move on to the ***ROBUST ANALYSIS*** that we have to do!
