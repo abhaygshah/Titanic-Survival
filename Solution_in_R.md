@@ -594,4 +594,8 @@ hist(mfull$Outlier.Score, col="cyan", xlab = "Outlier Score", main = "Analysing 
 ```
 which gives us
 
+![Hist_Outlier](https://user-images.githubusercontent.com/50455967/58268909-378c6100-7d3b-11e9-99e1-cd792982001f.jpeg)
 
+As you can see, we have a very small number of observations (9 to be precise) that have a score of 3. This means that 9 observations satisfy 3 out of the 4 conditions we set - they are outliers in 3 out of 4 predictors - Age, Fare, SibSp and Parch. Lets fix them.
+And guess what? All these outliers are in the training-set, and only 1 survived, the 3 year old boy, Edvin. The rest are very young kids too. 
+The criteria they satisfy is that they are very young, have a large Parch and a large SibSp. Since they belong to one particular class, I am going to leave them the way they are. I know - all this work and we do nothing! Well, we learned something didn't we? Allmost all people with exceptionally high SibSp, Parch and very low age didn't survive! Removing this observation won't be a smart thing to do. Moreover, we just saw that the linear model ain't that great - it literally didn't show that Embarked played a significant role. May be it is true, may be what is going on is some very subtle confounding. But lets not run to conclusions yet! Plus, we didn't even added the interaction terms or higher power terms. I suggest the following: lets move on to non-linear models - *Random Forest* and *GBM*. They are my favorite!
