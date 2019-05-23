@@ -549,3 +549,49 @@ v2[117]
 mfull$Age.Std = scale( ( (mfull$Age+1)^(0.8) - 1 )/(0.8) )
 ```
 Though Parch and SibSp are discrete variables (positive integers), their skewness is pretty high. We should fix them too. And once we fix them, we have to start worrying about **Outliers**. And do something with them! Then we move on to the ***ROBUST ANALYSIS*** that we have to do!
+
+On further analysis, I see that fixing the skewness of Parch and SibSp is not possible with Box-Cox transformation. So what I do is simply scale them so that their mean is 0 and sd 1. 
+```
+mfull$Parch.Std = scale(mfull$Parch)
+mfull$SibSp.Std = scale(mfull$SibSp)
+```
+
+Now, that I have scaled the continuous variables, I think its time to see what is going on with *Outliers*. Lets find a good way to detect them. First things first - I used Cooks Distance - wasn't of much use! It detected ~40 outliers. That is quite a lot (~4.5% of training data). Moreover, if I am going to use non-linear methods like Trees, outliers ain't worth the trouble. Yet, we should worry about some really nasty ones. So, lets begin. I can find outliers using the Fare.Std, Age.Std, Parch.Std and SibSp.Std columns. I make a new columns called *Outlier.Score*, fill it up with all 0s, and add a 1 everytime there is an outlier in Fare.Std, Age.Std, Parch.Std and SibSp.Std. As you guessed, the max I can have in that column is 4 and the min is 0. And we are interested in those with larger values in *Outlier.Score* column. Lets do that then, shall we?
+```
+mfull$Outlier.Score = rep(0,1309)
+
+# Find the inter-quantile range and multiply it with 1.5 in each predictor/column
+da = 1.5*( quantile(mfull$Age.Std,0.75) - quantile(mfull$Age.Std,0.25) )
+df = 1.5*( quantile(mfull$Fare.Std,0.75) - quantile(mfull$Fare.Std,0.25) )
+dp = 1.5*( quantile(mfull$Parch.Std,0.75) - quantile(mfull$Parch.Std,0.25) )
+ds = 1.5*( quantile(mfull$SibSp.Std,0.75) - quantile(mfull$SibSp.Std,0.25) )
+
+# Define my boundaries
+a1 = quantile(mfull$Age.Std,0.25) - da
+a2 = quantile(mfull$Age.Std,0.75) + da
+f1 = quantile(mfull$Fare.Std,0.25) - df
+f2 = quantile(mfull$Fare.Std,0.75) + df
+p1 = quantile(mfull$Parch.Std,0.25) - dp
+p2 = quantile(mfull$Parch.Std,0.75) + dp
+s1 = quantile(mfull$SibSp.Std,0.25) - ds
+s2 = quantile(mfull$SibSp.Std,0.75) + ds
+
+# Adding oulier-score
+for(i in 1:1309){
+    if(mfull$Age.Std[i]<a1 | mfull$Age.Std[i]>a2){
+    mfull$Outlier.Score[i] = mfull$Outlier.Score[i] + 1 } }
+for(i in 1:1309){
+    if(mfull$Fare.Std[i]<f1 | mfull$Fare.Std[i]>f2){
+    mfull$Outlier.Score[i] = mfull$Outlier.Score[i] + 1 } }
+for(i in 1:1309){
+    if(mfull$Parch.Std[i]<p1 | mfull$Parch.Std[i]>p2){
+    mfull$Outlier.Score[i] = mfull$Outlier.Score[i] + 1 } }
+for(i in 1:1309){
+    if(mfull$SibSp.Std[i]<s1 | mfull$SibSp.Std[i]>s2){
+    mfull$Outlier.Score[i] = mfull$Outlier.Score[i] + 1 } }
+    
+hist(mfull$Outlier.Score, col="cyan", xlab = "Outlier Score", main = "Analysing Outlier.Score")
+```
+which gives us
+
+
