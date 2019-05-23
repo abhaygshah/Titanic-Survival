@@ -639,4 +639,4 @@ write.csv(data.frame(t1) , "Desktop/Titanic_predictions_rf.csv")
 
 My public score was 0.79425. 
 
-Thats all, folks!
+![ThatsAll](https://user-images.githubusercontent.com/50455967/58273059-b639cc00-7d44-11e9-8d55-0c1f8d3d5065.jpg)
