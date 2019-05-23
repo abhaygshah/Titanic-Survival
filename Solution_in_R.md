@@ -597,5 +597,46 @@ which gives us
 ![Hist_Outlier](https://user-images.githubusercontent.com/50455967/58268909-378c6100-7d3b-11e9-99e1-cd792982001f.jpeg)
 
 As you can see, we have a very small number of observations (9 to be precise) that have a score of 3. This means that 9 observations satisfy 3 out of the 4 conditions we set - they are outliers in 3 out of 4 predictors - Age, Fare, SibSp and Parch. Lets fix them.
-And guess what? All these outliers are in the training-set, and only 1 survived, the 3 year old boy, Edvin. The rest are very young kids too. 
-The criteria they satisfy is that they are very young, have a large Parch and a large SibSp. Since they belong to one particular class, I am going to leave them the way they are. I know - all this work and we do nothing! Well, we learned something didn't we? Allmost all people with exceptionally high SibSp, Parch and very low age didn't survive! Removing this observation won't be a smart thing to do. Moreover, we just saw that the linear model ain't that great - it literally didn't show that Embarked played a significant role. May be it is true, may be what is going on is some very subtle confounding. But lets not run to conclusions yet! Plus, we didn't even added the interaction terms or higher power terms. I suggest the following: lets move on to non-linear models - *Random Forest* and *GBM*. They are my favorite!
+
+And.. guess what? All these outliers are in the training-set, and only 1 survived, the 3 year old boy, Edvin. The rest are very young kids too. The criteria they satisfy is that they are very young, have a large Parch and a large SibSp. Since they belong to one particular class, I am going to leave them the way they are. I know - all this work and we do nothing! Well, we learned something didn't we? Almost all people with exceptionally high SibSp, Parch and very low age didn't survive! Removing this observation won't be a smart thing to do. Moreover, we just saw that the linear model ain't that great - it literally didn't show that Embarked played a significant role. May be it is true, may be what is going on is some very subtle confounding. But lets not run to conclusions yet! Plus, we didn't even added the interaction terms or higher power terms. 
+
+Since, I am not removing/fixing them and they hardly play a role in non-linear methods, I suggest the following: lets move on to non-linear models - *Random Forest*. Its my favorite! 
+```
+rf.Titanic = randomForest(Survived ~ Pclass + Sex + Age.Std + SibSp.Std + Parch.Std + Fare.Std + Embarked + Titles , data = mfull , subset = train, importance = TRUE , ntree = 5000)
+
+importance(rf.Titanic)
+            %IncMSE IncNodePurity
+Pclass    130.16946     16.306245
+Sex        97.23971     27.763833
+Age.Std    76.70893     19.182316
+SibSp.Std  77.06793      8.388566
+Parch.Std  38.47240      4.855130
+Fare.Std  115.75377     26.277104
+Embarked   44.29447      5.022873
+Titles     97.27695     35.824270
+```
+Wow, clearly Embarked is not that of a big player. Nor is Parch. Pclass, Sex, Age, Fare and Titles are the biggest ones! Interesting...
+Lets makes some predictions now and check how well we did!
+```
+pred.Surv.prob = predict(rf.Titanic, mfull[train,], type = "response")
+pred.Surv = pred.Surv.prob
+pred.Surv[pred.Surv.prob>0.5] = 1
+pred.Surv[pred.Surv.prob<=0.5] = 0
+ 
+length(which(pred.Surv == mfull$Survived[train]))/891
+0.9102132
+```
+
+Wow, 91% accuracy! Not bad, huh! I know what you, an astute reader, is thinking. I chose a cut-off of 0.5 for the probabilities that Survived or didn't. What happens if I shift it? I played around that - found 0.5 to be the best. Lets move on to making predictions on the test set. 
+```
+pred.Surv.prob = predict(rf.Titanic, mfull[-train,], type = "response")
+pred.Surv = pred.Surv.prob
+pred.Surv[pred.Surv.prob>0.5] = 1
+pred.Surv[pred.Surv.prob<=0.5] = 0
+t1 = pred.Surv
+write.csv(data.frame(t1) , "Desktop/Titanic_predictions_rf.csv")
+```
+
+My public score was 0.79425. 
+
+Thats all, folks!
