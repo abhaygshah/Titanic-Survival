@@ -12,10 +12,10 @@ In this challenge, we ask you to complete the analysis of what sorts of people w
 
 We are going to solve this in some steps
 
-## 1. Feature analysis
-## 2. Filling in missing values
-## 3. Feature "engineering"
-## 4. Machine Learning (using a linear and then non-linear method). 
+**1. Feature analysis**
+**2. Filling in missing values**
+**3. Feature "engineering"**
+**4. Machine Learning (using a linear and then non-linear method)**
 
 ```
 train = read.csv("Desktop/Titanic/train.csv")
