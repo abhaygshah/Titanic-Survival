@@ -1,11 +1,21 @@
 # Titanic: Machine Learning from Disaster 
+
+## Solution using R
+
 **Challenge:** The sinking of the RMS Titanic is one of the most infamous shipwrecks in history.  On April 15, 1912, during her maiden voyage, the Titanic sank after colliding with an iceberg, killing 1502 out of 2224 passengers and crew. This sensational tragedy shocked the international community and led to better safety regulations for ships.
 
 One of the reasons that the shipwreck led to such loss of life was that there were not enough lifeboats for the passengers and crew. Although there was some element of luck involved in surviving the sinking, some groups of people were more likely to survive than others, such as women, children, and the upper-class.
 
 In this challenge, we ask you to complete the analysis of what sorts of people were likely to survive. In particular, we ask you to apply the tools of machine learning to predict which passengers survived the tragedy.
 
-# Solution using R
+
+
+We are going to solve this in some steps
+
+## 1. Feature analysis
+## 2. Filling in missing values
+## 3. Feature "engineering"
+## 4. Machine Learning (using a linear and then non-linear method). 
 
 ```
 train = read.csv("Desktop/Titanic/train.csv")
@@ -25,17 +35,28 @@ which then gives me
 [5] "Sex"         "Age"         "SibSp"       "Parch"      
 [9] "Ticket"      "Fare"        "Cabin"       "Embarked"
 ````
+## 1. Feature analysis
 
 Let me first tell you what each column is
+
 (1) PassengerId is just the row number. Thankfully, I am using **R** which means I don't have to worry about the off-by-one issue - whew!
+
 (2) Survived is just 0 or 1 (for those who survived).
+
 (3) Pclass tells you if its first, second or third class.
+
 (4-6) Name, Sex and Age are pretty much self-explanatory.
+
 (7) SibSp gives the total number of siblings and spouses that particular passenger has. 
+
 (8) Parch gives the total number of parents and children that particular passenger has.
+
 (9) Ticket is the Ticket number.
+
 (10) Fare is self-explanatory.
+
 (11) Cabin is the cabin-number.
+
 (12) Embarked tells us where the passenger embarked from Cherbourg, Queenstown or Southampton. Psst - I was in Southampton for 4 years! Its a nice place. 
 
 We can also look at the data in the train-file using
@@ -229,7 +250,11 @@ which then give us
 
 ![Emb_Vs_Surv](https://user-images.githubusercontent.com/50455967/58117194-e18cb180-7bb2-11e9-8dbf-8a7a508db9aa.jpeg)
 
-You can clearly see that a large % of people who embarked on this journey from Cherbourg didn't survive. This is also evident from the heatmap above. Alright, I think this is enough analysis for now... Lets move on to fill some missing values, shall we? I can clearly see that the Age predictor has 20% of its values missing. I am going to fill it up using the titles that each person hold. The titles are given in the Name predictor. See, everything comes in some use. 
+You can clearly see that a large % of people who embarked on this journey from Cherbourg didn't survive. This is also evident from the heatmap above. Alright, I think this is enough analysis for now... Lets move on to fill some missing values, shall we? 
+
+## 2. Filling in missing values
+
+I can clearly see that the Age predictor has 20% of its values missing. I am going to fill it up using the titles that each person hold. The titles are given in the Name predictor. See, everything comes in some use. 
 Note: This idea is indeed superb but I cannot take credit for it - I borrowed this idea from Yassine Ghouzam who has shown some fine work on this competition. 
 
 Alright so, let me go ahead and work on it. These little lines extracts the title (Mr., Mrs, Master, etc)
@@ -452,6 +477,7 @@ mean(na.omit(mfull$Fare[mfull$Embarked=="S" & mfull$Pclass==3 & mfull$Age > 50])
 mfull$Fare[1044] = 7.719275
 ```
 
+## 3. Feature "engineering" & 4. Machine Learning (using a linear and then non-linear method). 
 
 So, I have finally filled up all the missing values. Its time for some analysis. Since I began with (stupidly) assigning the names "train" and "test" to the datasets, its time to ammend these names:
 ```
