@@ -726,4 +726,3 @@ write.csv(data.frame(t1) , "Desktop/Titanic_predictions_rf.csv")
 My public score was 0.79904. 
 
 ** *Thats all, folks!* **
-**OR IS IT?** I think a **robust analysis** would involve using other techniques, using a *cross-validation* set (from training set) and may-be using an ensemble.
