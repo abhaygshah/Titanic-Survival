@@ -374,6 +374,7 @@ tab5
 ```
 
 ```
+levels(mfull$Titles) = c(levels(mfull$Titles),"Fancy")
 axe = which(mfull$Titles == "Capt.")
 mfull$Titles[axe] = "Fancy"
 axe = which(mfull$Titles == "Col.")
