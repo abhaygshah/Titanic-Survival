@@ -264,6 +264,7 @@ Note: This idea is indeed superb but I cannot take credit for it - I borrowed th
 
 Alright so, let me go ahead and work on it. These little lines extracts the title (Mr., Mrs, Master, etc)
 ```
+library(reshape2)
 SecondPart = colsplit(train$Name, ",", c("1","2") )[,2]
 RemoveSpace = substring( SecondPart , 2 )
 train$Titles = colsplit( RemoveSpace ," ",c("1","2") )[,1]
