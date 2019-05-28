@@ -407,8 +407,8 @@ mfull$Titles[axe] = "Mrs."
 ```
 With these changes, lets see what I get:
 ```
-tab5.Nos = rep(0,18)
-for(i in 1:18){
+tab5.Nos = rep(0,19)
+for(i in 1:19){
                 tab5.Nos[i] = sum(mfull$Titles==levels(mfull$Titles)[i]) 
                 }
 tab5.Titles = levels(mfull$Titles)
