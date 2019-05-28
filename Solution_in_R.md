@@ -227,6 +227,7 @@ tab3.Fare = c("Less","Less","More","More")
 tab3.Nos = c(DFL, SFL , DFG , SFG)
 tab3 = data.frame(cbind(tab3.Surv , tab3.Fare , tab3.Nos))
 tab3$Nos = tab3.Nos
+tab3$Fare = tab3.Fare
 ggplot(data=tab3, aes(x=Fare, y=Nos, fill=Surv)) + geom_bar(stat="identity")
 ```
 
