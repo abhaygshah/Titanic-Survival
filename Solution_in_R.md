@@ -438,35 +438,87 @@ tab5
 ```
 Lets find rows which belong to these 5 titles:
 ```
-row.Master = which( mfull$Titles == "Master." )
-row.Mr = which( mfull$Titles == "Mr." )
-row.Mrs = which( mfull$Titles == "Mrs." )
-row.Miss = which( mfull$Titles == "Miss." )
-row.Fancy = which( mfull$Titles == "Fancy" )
+row.Master.1 = which( mfull$Titles == "Master." & mfull$Pclass == 1)
+row.Master.2 = which( mfull$Titles == "Master." & mfull$Pclass == 2)
+row.Master.3 = which( mfull$Titles == "Master." & mfull$Pclass == 3)
+
+row.Mr.3 = which( mfull$Titles == "Mr." & mfull$Pclass == 3)
+row.Mr.2 = which( mfull$Titles == "Mr." & mfull$Pclass == 2)
+row.Mr.1 = which( mfull$Titles == "Mr." & mfull$Pclass == 1)
+
+row.Mrs.1 = which( mfull$Titles == "Mrs." & mfull$Pclass == 1)
+row.Mrs.2 = which( mfull$Titles == "Mrs." & mfull$Pclass == 2)
+row.Mrs.3 = which( mfull$Titles == "Mrs." & mfull$Pclass == 3)
+
+row.Miss.3 = which( mfull$Titles == "Miss." & mfull$Pclass == 3)
+row.Miss.2 = which( mfull$Titles == "Miss." & mfull$Pclass == 2)
+row.Miss.1 = which( mfull$Titles == "Miss." & mfull$Pclass == 1)
+
+row.Fancy.1 = which( mfull$Titles == "Fancy" & mfull$Pclass == 1)
+row.Fancy.2 = which( mfull$Titles == "Fancy" & mfull$Pclass == 2)
+row.Fancy.3 = which( mfull$Titles == "Fancy" & mfull$Pclass == 3)
 ```
 Lets find the mean age in each of these
 ```
-age.Master = mean(na.omit(mfull$Age[row.Master])) # 5.48
-age.Mr = mean(na.omit(mfull$Age[row.Mr])) # 32.25
-age.Mrs = mean(na.omit(mfull$Age[row.Mrs])) # 36.92
-age.Miss = mean(na.omit(mfull$Age[row.Miss])) # 21.82
-age.Fancy = mean(na.omit(mfull$Age[row.Fancy])) # 45.18
+age.Master.1 = mean(na.omit(mfull$Age[row.Master.1])) # 6.98
+age.Master.2 = mean(na.omit(mfull$Age[row.Master.2])) # 2.76
+age.Master.3 = mean(na.omit(mfull$Age[row.Master.3])) # 6.09
+
+age.Mr.3 = mean(na.omit(mfull$Age[row.Mr.3])) # 28.32
+age.Mr.2 = mean(na.omit(mfull$Age[row.Mr.2])) # 32.35
+age.Mr.1 = mean(na.omit(mfull$Age[row.Mr.1])) # 41.45
+
+age.Mrs.1 = mean(na.omit(mfull$Age[row.Mrs.1])) # 42.93
+age.Mrs.2 = mean(na.omit(mfull$Age[row.Mrs.2])) # 33.52
+age.Mrs.3 = mean(na.omit(mfull$Age[row.Mrs.3])) # 32.33
+
+age.Miss.1 = mean(na.omit(mfull$Age[row.Miss.1])) # 30.13
+age.Miss.2 = mean(na.omit(mfull$Age[row.Miss.2])) # 20.87
+age.Miss.3 = mean(na.omit(mfull$Age[row.Miss.3])) # 17.36
+
+age.Fancy.1 = mean(na.omit(mfull$Age[row.Fancy.1])) # 47.67
+age.Fancy.2 = mean(na.omit(mfull$Age[row.Fancy.2])) # 40.7
+age.Fancy.3 = mean(na.omit(mfull$Age[row.Fancy.3])) # NA (of course!)
 ```
 Lets find the rows with missing ages as follows:
 ```
-rows.Masters.ageless = which(mfull$Titles == "Master." & is.na(mfull$Age) == T)
-rows.Mr.ageless = which(mfull$Titles == "Mr." & is.na(mfull$Age) == T)
-rows.Miss.ageless = which(mfull$Titles == "Miss." & is.na(mfull$Age) == T)
-rows.Mrs.ageless = which(mfull$Titles == "Mrs." & is.na(mfull$Age) == T)
-rows.Fancy.ageless = which(mfull$Titles == "Fancy" & is.na(mfull$Age) == T)
+rows.Masters.1.ageless = which(mfull$Titles == "Master." & is.na(mfull$Age) == T & mfull$Pclass == 1) # 0
+rows.Masters.2.ageless = which(mfull$Titles == "Master." & is.na(mfull$Age) == T & mfull$Pclass == 2) # 0
+rows.Masters.3.ageless = which(mfull$Titles == "Master." & is.na(mfull$Age) == T & mfull$Pclass == 3) # 8 rows
+
+rows.Mr.1.ageless = which(mfull$Titles == "Mr." & is.na(mfull$Age) == T & mfull$Pclass == 1) # 27 rows
+rows.Mr.2.ageless = which(mfull$Titles == "Mr." & is.na(mfull$Age) == T & mfull$Pclass == 2) # 13 rows
+rows.Mr.3.ageless = which(mfull$Titles == "Mr." & is.na(mfull$Age) == T & mfull$Pclass == 3) # 136 rows
+
+rows.Miss.1.ageless = which(mfull$Titles == "Miss." & is.na(mfull$Age) == T & mfull$Pclass == 1) # 1 row
+rows.Miss.2.ageless = which(mfull$Titles == "Miss." & is.na(mfull$Age) == T & mfull$Pclass == 2) # 2 rows
+rows.Miss.3.ageless = which(mfull$Titles == "Miss." & is.na(mfull$Age) == T & mfull$Pclass == 3) # 48 rows
+
+rows.Mrs.1.ageless = which(mfull$Titles == "Mrs." & is.na(mfull$Age) == T & mfull$Pclass == 1) # 10 rows
+rows.Mrs.2.ageless = which(mfull$Titles == "Mrs." & is.na(mfull$Age) == T & mfull$Pclass == 2) # 1 row
+rows.Mrs.3.ageless = which(mfull$Titles == "Mrs." & is.na(mfull$Age) == T & mfull$Pclass == 3) # 16 rows
+
+rows.Fancy.1.ageless = which(mfull$Titles == "Fancy" & is.na(mfull$Age) == T & mfull$Pclass == 1) # 1 row
+rows.Fancy.2.ageless = which(mfull$Titles == "Fancy" & is.na(mfull$Age) == T & mfull$Pclass == 2) # 0
+rows.Fancy.3.ageless = which(mfull$Titles == "Fancy" & is.na(mfull$Age) == T & mfull$Pclass == 3) # 0
 ```
 Assigning the ages as follows:
 ```
-mfull$Age[rows.Fancy.ageless] = age.Fancy
-mfull$Age[rows.Masters.ageless] = age.Master
-mfull$Age[rows.Miss.ageless] = age.Miss
-mfull$Age[rows.Mr.ageless] = age.Mr
-mfull$Age[rows.Mrs.ageless] = age.Mrs
+mfull$Age[rows.Masters.3.ageless] = age.Master.3
+
+mfull$Age[rows.Mr.1.ageless] = age.Mr.1
+mfull$Age[rows.Mr.2.ageless] = age.Mr.2
+mfull$Age[rows.Mr.3.ageless] = age.Mr.3
+
+mfull$Age[rows.Miss.1.ageless] = age.Miss.1
+mfull$Age[rows.Miss.2.ageless] = age.Miss.2
+mfull$Age[rows.Miss.3.ageless] = age.Miss.3
+
+mfull$Age[rows.Mrs.1.ageless] = age.Mrs.1
+mfull$Age[rows.Mrs.2.ageless] = age.Mrs.2
+mfull$Age[rows.Mrs.3.ageless] = age.Mrs.3
+
+mfull$Age[rows.Fancy.1.ageless] = age.Fancy.1
 ```
 Lets check if we have any more NA's.
 ```
@@ -509,33 +561,33 @@ glm(formula = Survived ~ Pclass + Sex + Age + SibSp + Parch +
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
--2.3876  -0.5576  -0.3830   0.5404   2.5939  
+-2.4318  -0.5542  -0.3740   0.5347   2.5886  
 
 Coefficients:
               Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  3.305e+01  1.323e+03   0.025 0.980073    
-Pclass2     -1.084e+00  3.235e-01  -3.351 0.000804 ***
-Pclass3     -2.170e+00  3.193e-01  -6.796 1.08e-11 ***
-Sexmale     -1.621e+01  8.326e+02  -0.019 0.984465    
-Age         -2.964e-02  9.616e-03  -3.082 0.002055 ** 
-SibSp       -5.557e-01  1.260e-01  -4.411 1.03e-05 ***
-Parch       -3.574e-01  1.347e-01  -2.653 0.007988 ** 
-Fare         3.432e-03  2.648e-03   1.296 0.195050    
-EmbarkedC   -1.250e+01  1.029e+03  -0.012 0.990302    
-EmbarkedQ   -1.262e+01  1.029e+03  -0.012 0.990207    
-EmbarkedS   -1.293e+01  1.029e+03  -0.013 0.989972    
-TitlesMiss. -1.671e+01  8.326e+02  -0.020 0.983987    
-TitlesMr.   -3.389e+00  5.490e-01  -6.172 6.74e-10 ***
-TitlesMrs.  -1.584e+01  8.326e+02  -0.019 0.984818    
-TitlesFancy -3.373e+00  7.929e-01  -4.254 2.10e-05 ***
+(Intercept)  3.319e+01  1.323e+03   0.025 0.979976    
+Pclass2     -1.186e+00  3.319e-01  -3.573 0.000353 ***
+Pclass3     -2.307e+00  3.331e-01  -6.928 4.28e-12 ***
+Sexmale     -1.618e+01  8.313e+02  -0.019 0.984473    
+Age         -3.342e-02  9.935e-03  -3.364 0.000768 ***
+SibSp       -5.657e-01  1.268e-01  -4.462 8.12e-06 ***
+Parch       -3.594e-01  1.359e-01  -2.645 0.008179 ** 
+Fare         3.222e-03  2.637e-03   1.222 0.221671    
+EmbarkedC   -1.251e+01  1.029e+03  -0.012 0.990298    
+EmbarkedQ   -1.267e+01  1.029e+03  -0.012 0.990176    
+EmbarkedS   -1.291e+01  1.029e+03  -0.013 0.989988    
+TitlesMiss. -1.668e+01  8.313e+02  -0.020 0.983993    
+TitlesMr.   -3.355e+00  5.496e-01  -6.105 1.03e-09 ***
+TitlesMrs.  -1.575e+01  8.313e+02  -0.019 0.984883    
+TitlesFancy -3.340e+00  7.921e-01  -4.216 2.48e-05 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
     Null deviance: 1186.66  on 890  degrees of freedom
-Residual deviance:  723.63  on 876  degrees of freedom
-AIC: 753.63
+Residual deviance:  721.63  on 876  degrees of freedom
+AIC: 751.63
 
 Number of Fisher Scoring iterations: 14
 ```
@@ -566,20 +618,20 @@ This clearly shows that using v1[98] = -0.15 (the lambda for Box-Cox Transformat
 ```
 mfull$Fare.Std = scale( ( (mfull$Fare+1)^(-0.15) - 1 )/(-0.15) )
 ```
-Age's skewness is not that bad - its 0.37. Lets try to bring it closer to zero. 
+Age's skewness is not that bad - its 0.44. Lets try to bring it closer to zero. 
 ```
 v4 = rep(NA,201)
-> for(i in 1:201){
+for(i in 1:201){
     if(v1[i] != 0){
     v4[i] = skewness( ((mfull$Age+1)^v1[i] - 1)/v1[i] )}
     else { v4[i] = skewness(log(mfull$Age+1)) } }
 which.min(abs(v4))
-    117
-v1[117]
-    0.8
-v2[117]
-    -0.002134134
-mfull$Age.Std = scale( ( (mfull$Age+1)^(0.8) - 1 )/(0.8) )
+    116
+v1[116]
+    0.75
+v4[116]
+    -0.01336902
+mfull$Age.Std = scale( ( (mfull$Age+1)^(0.75) - 1 )/(0.75) )
 ```
 Though Parch and SibSp are discrete variables (positive integers), their skewness is pretty high. We should fix them too. And once we fix them, we have to start worrying about **Outliers**. And do something with them! Then we move on to the ***ROBUST ANALYSIS*** that we have to do!
 
@@ -635,18 +687,19 @@ And.. guess what? All these outliers are in the training-set, and only 1 survive
 
 Since, I am not removing/fixing them and they hardly play a role in non-linear methods, I suggest the following: lets move on to non-linear models - *Random Forest*. Its my favorite! 
 ```
+library(randomForest)
 rf.Titanic = randomForest(Survived ~ Pclass + Sex + Age.Std + SibSp.Std + Parch.Std + Fare.Std + Embarked + Titles , data = mfull , subset = train, importance = TRUE , ntree = 5000)
 
 importance(rf.Titanic)
             %IncMSE IncNodePurity
-Pclass    130.16946     16.306245
-Sex        97.23971     27.763833
-Age.Std    76.70893     19.182316
-SibSp.Std  77.06793      8.388566
-Parch.Std  38.47240      4.855130
-Fare.Std  115.75377     26.277104
-Embarked   44.29447      5.022873
-Titles     97.27695     35.824270
+Pclass    128.12391     16.214753
+Sex        97.66817     28.079048
+Age.Std    77.40959     19.830630
+SibSp.Std  73.96912      8.320076
+Parch.Std  37.90364      4.898954
+Fare.Std  116.21760     26.273986
+Embarked   45.46502      4.943887
+Titles     96.04014     34.735149
 ```
 Wow, clearly Embarked is not that of a big player. Nor is Parch. Pclass, Sex, Age, Fare and Titles are the biggest ones! Interesting...
 Lets makes some predictions now and check how well we did!
@@ -657,10 +710,10 @@ pred.Surv[pred.Surv.prob>0.5] = 1
 pred.Surv[pred.Surv.prob<=0.5] = 0
  
 length(which(pred.Surv == mfull$Survived[train]))/891
-0.9102132
+0.9090909
 ```
 
-Wow, 91% accuracy! Not bad, huh! I know what you, an astute reader, is thinking. I chose a cut-off of 0.5 for the probabilities that Survived or didn't. What happens if I shift it? I played around that - found 0.5 to be the best. Lets move on to making predictions on the test set. 
+I know what you, an astute reader, is thinking. I chose a cut-off of 0.5 for the probabilities that Survived or didn't. What happens if I shift it? I played around that - found 0.5 to be the best. Lets move on to making predictions on the test set. 
 ```
 pred.Surv.prob = predict(rf.Titanic, mfull[-train,], type = "response")
 pred.Surv = pred.Surv.prob
@@ -670,7 +723,7 @@ t1 = pred.Surv
 write.csv(data.frame(t1) , "Desktop/Titanic_predictions_rf.csv")
 ```
 
-My public score was 0.79425. 
+My public score was 0.79904. 
 
 ** *Thats all, folks!* **
 **OR IS IT?** I think a **robust analysis** would involve using other techniques, using a *cross-validation* set (from training set) and may-be using an ensemble. One more thing in feature engineering - I think we should separate Parch into Parents & Children. Does being a parent work in one's favor or not? Same for children. This needs to be done. Alright, thats to be done after the Memorial day.
