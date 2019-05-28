@@ -154,6 +154,7 @@ D3 = sum(train$Pclass==3 & train$Survived==1)
 D3 = sum(train$Pclass==3 & train$Survived==0)
 D2 = sum(train$Pclass==2 & train$Survived==0)
 D1 = sum(train$Pclass==1 & train$Survived==0)
+Surv = rep(c(0,1),3)
 tab1.Surv = Surv
 tab1.Pclass = c(1,1,2,2,3,3)
 tab1.nos = c(D1,S1,D2,S2,D3,S3)
